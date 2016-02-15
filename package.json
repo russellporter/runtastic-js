@@ -1,0 +1,41 @@
+{
+  "name": "runtastic-js",
+  "version": "1.0.0",
+  "description": "Node class to access the Runtastic.com API.",
+  "dependencies": {
+    "cheerio": "^0.20.0"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha",
+    "start": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/terhuerne/runtastic-js.git"
+  },
+  "keywords": [
+    "runtastic",
+    "api",
+    "node",
+    "health",
+    "fitness"
+  ],
+  "main": "./index.js",
+  "files": [
+    "index.js",
+    "lib"
+  ],
+  "engines": {
+    "node": ">= 0.6"
+  },
+  "author": "Johannes Terhürne <johannes@terhuerne.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/terhuerne/runtastic-js/issues"
+  },
+  "homepage": "https://github.com/terhuerne/runtastic-js#readme",
+  "devDependencies": {
+    "mocha": "^2.4.5",
+    "should": "^8.2.2"
+  }
+}
