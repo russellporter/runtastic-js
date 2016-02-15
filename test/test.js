@@ -3,6 +3,8 @@ var should = require('should'),
 
 console.log(process.env);
 
+
+
 describe('Constructor', function() {
   it('Should save the credentials to the Object', function() {
     var runtasticSession = new runtastic('username', 'password');
