@@ -11,7 +11,7 @@ describe('Constructor', function() {
 
 describe('.login(function(err, user))', function() {
   it('Successful Login with valid credentials', function(done) {
-    var runtasticSession = new runtastic(process.env.runtasticUserName, process.env.runtasticUserPassword);
+    var runtasticSession = new runtastic(process.env.RUNTASTIC_NAME, process.env.RUNTASTIC_PASSWORD);
     runtasticSession.login(function(err, user) {
       if (err) throw err;
       done();
@@ -37,7 +37,7 @@ describe('.login(function(err, user))', function() {
 
 describe('.logout(function(err, status))', function() {
   it('Successful Logout after successful Login', function(done) {
-    var runtasticSession = new runtastic(process.env.runtasticUserName, process.env.runtasticUserPassword);
+    var runtasticSession = new runtastic(process.env.RUNTASTIC_NAME, process.env.RUNTASTIC_PASSWORD);
     runtasticSession.login(function(err, user) {
       if (err) throw err;
       runtasticSession.logout(function(err, status) {
