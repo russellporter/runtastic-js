@@ -1,53 +1,88 @@
 var should = require('should'),
-    runtastic = require('../');
-
-console.log(process.env);
-
-
+    runtastic = require('../'),
+    runtasticSession = null;
 
 describe('Constructor', function() {
   it('Should save the credentials to the Object', function() {
-    var runtasticSession = new runtastic('username', 'password');
+    runtasticSession = new runtastic('username', 'password');
     runtasticSession.username.should.equal('username');
     runtasticSession.password.should.equal('password');
   });
 });
 
 describe('.login(function(err, user))', function() {
-  it('Successful Login with valid credentials', function(done) {
-    var runtasticSession = new runtastic(process.env.RUNTASTIC_NAME, process.env.RUNTASTIC_PASSWORD);
-    runtasticSession.login(function(err, user) {
-      if (err) throw err;
-      done();
-    });
-  });
-
   it('Failed Login with invalid credentials', function(done) {
-    var runtasticSession = new runtastic('wrong', 'credentials');
     runtasticSession.login(function(err, user) {
       err['code'].should.equal(403);
       done();
     });
   });
-
   it('Failed Login with no credentials', function(done) {
-      var runtasticSession = new runtastic();
-      runtasticSession.login(function(err, user) {
-        err['code'].should.equal(401);
-        done();
-      });
+    runtasticSession = new runtastic();
+    runtasticSession.login(function(err, user) {
+      err['code'].should.equal(401);
+      done();
+    });
+  });
+  it('Successful Login with valid credentials', function(done) {
+    runtasticSession = new runtastic(process.env.RUNTASTIC_NAME, process.env.RUNTASTIC_PASSWORD);
+    runtasticSession.login(function(err, user) {
+      if (err) throw err;
+      done();
+    });
+  });
+});
+
+describe('.fetchActivities(function(err, activities))', function() {
+  it('Fetch all Activities from 1970/01/01 to current Date', function(done) {
+    this.timeout(5000);
+    runtasticSession.fetchActivities(null, function(err, activities) {
+      if (err) throw err;
+      activities.should.be.an.instanceOf(Array);
+      done();
+    });
+  });
+  it('Set Timerange and fetch all Activities from 2016/01/01 to current Date', function(done) {
+    this.timeout(5000);
+    runtasticSession.setTimeframe(new Date('2016/01/01'), new Date());
+    runtasticSession.fetchActivities(null, function(err, activities) {
+      if (err) throw err;
+      activities.should.be.an.instanceOf(Array);
+      done();
+    });
+  });
+  it('fetch the latest 5 Activities in the Timeframe from 2016/01/01 to current Date', function(done) {
+    this.timeout(5000);
+    runtasticSession.setTimeframe(new Date('2016/01/01'), new Date());
+    runtasticSession.fetchActivities(5, function(err, activities) {
+      if (err) throw err;
+      activities.should.be.an.instanceOf(Array).and.have.lengthOf(5);
+      done();
+    });
+  });
+});
+
+describe('.fetchActivityDetail(id, getTraces, function(err, activity))', function(){
+  it('Get existing Activity-Details for an Activity without Traces', function(done){
+    runtasticSession.fetchActivityDetail(1101860177, false, function(err, activity){
+      if (err) throw err;
+      done();
+    });
+  });
+  it('Get existing Activity-Details for an Activity with Traces', function(done){
+    runtasticSession.fetchActivityDetail(1101860177, true, function(err, activity){
+      console.log(activity);
+      if (err) throw err;
+      done();
+    });
   });
 });
 
 describe('.logout(function(err, status))', function() {
   it('Successful Logout after successful Login', function(done) {
-    var runtasticSession = new runtastic(process.env.RUNTASTIC_NAME, process.env.RUNTASTIC_PASSWORD);
-    runtasticSession.login(function(err, user) {
+    runtasticSession.logout(function(err, status) {
       if (err) throw err;
-      runtasticSession.logout(function(err, status) {
-        if (err) throw err;
-        done();
-      });
+      done();
     });
   });
 });
