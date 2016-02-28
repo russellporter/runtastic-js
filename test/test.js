@@ -71,8 +71,62 @@ describe('.fetchActivityDetail(id, getTraces, function(err, activity))', functio
   });
   it('Get existing Activity-Details for an Activity with Traces', function(done){
     runtasticSession.fetchActivityDetail(1101860177, true, function(err, activity){
-      console.log(activity);
       if (err) throw err;
+      done();
+    });
+  });
+});
+
+describe('.fetchWeight(limit, function(err, weights))', function() {
+  it('Get all Measurements', function(done) {
+    runtasticSession.fetchWeight(null, function(err, weights) {
+      if (err) throw err;
+      done();
+    });
+  });
+
+  it('Get the latest 5 Measurements', function(done) {
+    runtasticSession.fetchWeight(5, function(err, weights) {
+      if (err) throw err;
+      weights.should.be.an.instanceOf(Array).and.have.lengthOf(5);
+      done();
+    });
+  });
+});
+
+describe('.fetchHeartrate(limit, function(err, heartrates))', function() {
+  it('Get all Measurements', function(done) {
+    runtasticSession.fetchHeartrate(null, function(err, heartrates) {
+      if (err) throw err;
+      done();
+    });
+  });
+
+  it('Get the latest 5 Measurements', function(done) {
+    runtasticSession.fetchHeartrate(5, function(err, heartrates) {
+      if (err) throw err;
+      heartrates.should.be.an.instanceOf(Array).and.have.lengthOf(5);
+      done();
+    });
+  });
+});
+
+describe('.fetchAll(limit, function(err, results))', function() {
+  this.timeout(5000);
+  it('Get Results from all API-Endpoints', function(done) {
+    runtasticSession.fetchAll(null, function(err, results) {
+      if (err) throw err;
+      done();
+    });
+  });
+
+  it('Get the latest 5 Results from all API-Endpoints', function(done) {
+    this.timeout(5000);
+    runtasticSession.fetchAll(5, function(err, results) {
+      if (err) throw err;
+      results['activities'].should.be.an.instanceOf(Array).and.have.lengthOf(5);
+      results['weight'].should.be.an.instanceOf(Array).and.have.lengthOf(5);
+      results['heartrates'].should.be.an.instanceOf(Array).and.have.lengthOf(5);
       done();
     });
   });

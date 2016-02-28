@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Node class to access the Runtastic.com API.",
   "dependencies": {
+    "async": "^1.5.2",
     "cheerio": "^0.20.0"
   },
   "scripts": {
