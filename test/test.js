@@ -62,14 +62,14 @@ describe('.fetchActivities(function(err, activities))', function() {
 
 describe('.fetchActivityDetail(id, getTraces, function(err, activity))', function(){
   it('Get existing Activity-Details for an Activity without Traces', function(done){
-    this.timeout(5000);
+    this.timeout(10000);
     runtasticSession.fetchActivityDetail(1101860177, false, function(err, activity){
       if (err) throw err;
       done();
     });
   });
   it('Get existing Activity-Details for an Activity with Traces', function(done){
-    this.timeout(5000);
+    this.timeout(10000);
     runtasticSession.fetchActivityDetail(1101860177, true, function(err, activity){
       if (err) throw err;
       done();
