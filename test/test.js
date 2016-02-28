@@ -60,24 +60,24 @@ describe('.fetchActivities(function(err, activities))', function() {
   });
 });
 
-describe('.fetchActivityDetail(id, getTraces, function(err, activity))', function(){
+describe('.fetchActivityDetails(id, getTraces, function(err, activity))', function(){
   it('Get existing Activity-Details for an Activity without Traces', function(done){
     this.timeout(10000);
-    runtasticSession.fetchActivityDetail(1101860177, false, function(err, activity){
+    runtasticSession.fetchActivityDetails(1101860177, false, function(err, activity){
       if (err) throw err;
       done();
     });
   });
   it('Get existing Activity-Details for an Activity with Traces', function(done){
     this.timeout(10000);
-    runtasticSession.fetchActivityDetail(1101860177, true, function(err, activity){
+    runtasticSession.fetchActivityDetails(1101860177, true, function(err, activity){
       if (err) throw err;
       done();
     });
   });
 });
 
-describe('.fetchWeight(limit, function(err, weights))', function() {
+describe('.fetchWeight(limit, timeframe, function(err, weights))', function() {
   it('Get all Measurements', function(done) {
     runtasticSession.fetchWeight(null, null, function(err, weights) {
       if (err) throw err;
@@ -101,7 +101,7 @@ describe('.fetchWeight(limit, function(err, weights))', function() {
   });
 });
 
-describe('.fetchHeartrate(limit, function(err, heartrates))', function() {
+describe('.fetchHeartrate(limit, timeframe, function(err, heartrates))', function() {
   it('Get all Measurements', function(done) {
     runtasticSession.fetchHeartrate(null, null, function(err, heartrates) {
       if (err) throw err;
