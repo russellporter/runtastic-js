@@ -1,7 +1,7 @@
 {
   "name": "runtastic-js",
   "version": "1.0.0",
-  "description": "Node class to access the Runtastic.com API.",
+  "description": "runtastic-js is an API-Wrapper for the Runtastic.com Service. The module is designed for use with Node.js and is installable via npm.",
   "dependencies": {
     "async": "^1.5.2",
     "cheerio": "^0.20.0"
