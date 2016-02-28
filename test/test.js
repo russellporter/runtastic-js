@@ -36,7 +36,7 @@ describe('.login(function(err, user))', function() {
 describe('.fetchActivities(function(err, activities))', function() {
   it('Fetch all Activities from 1970/01/01 to current Date', function(done) {
     this.timeout(5000);
-    runtasticSession.fetchActivities(null, function(err, activities) {
+    runtasticSession.fetchActivities(null, null, function(err, activities) {
       if (err) throw err;
       activities.should.be.an.instanceOf(Array);
       done();
@@ -44,8 +44,7 @@ describe('.fetchActivities(function(err, activities))', function() {
   });
   it('Set Timerange and fetch all Activities from 2016/01/01 to current Date', function(done) {
     this.timeout(5000);
-    runtasticSession.setTimeframe(new Date('2016/01/01'), new Date());
-    runtasticSession.fetchActivities(null, function(err, activities) {
+    runtasticSession.fetchActivities(null, {'from': new Date('2016/01/01'), 'to': new Date()}, function(err, activities) {
       if (err) throw err;
       activities.should.be.an.instanceOf(Array);
       done();
@@ -53,8 +52,7 @@ describe('.fetchActivities(function(err, activities))', function() {
   });
   it('fetch the latest 5 Activities in the Timeframe from 2016/01/01 to current Date', function(done) {
     this.timeout(5000);
-    runtasticSession.setTimeframe(new Date('2016/01/01'), new Date());
-    runtasticSession.fetchActivities(5, function(err, activities) {
+    runtasticSession.fetchActivities(5, {'from': new Date('2016/01/01'), 'to': new Date()}, function(err, activities) {
       if (err) throw err;
       activities.should.be.an.instanceOf(Array).and.have.lengthOf(5);
       done();
@@ -79,16 +77,23 @@ describe('.fetchActivityDetail(id, getTraces, function(err, activity))', functio
 
 describe('.fetchWeight(limit, function(err, weights))', function() {
   it('Get all Measurements', function(done) {
-    runtasticSession.fetchWeight(null, function(err, weights) {
+    runtasticSession.fetchWeight(null, null, function(err, weights) {
       if (err) throw err;
       done();
     });
   });
 
   it('Get the latest 5 Measurements', function(done) {
-    runtasticSession.fetchWeight(5, function(err, weights) {
+    runtasticSession.fetchWeight(5, null, function(err, weights) {
       if (err) throw err;
       weights.should.be.an.instanceOf(Array).and.have.lengthOf(5);
+      done();
+    });
+  });
+
+  it('Get Measurements in the Timeframe from 2016/01/01 to current Date', function(done) {
+    runtasticSession.fetchWeight(null, {'from': new Date('2016/01/01'), 'to': new Date()}, function(err, weights) {
+      if (err) throw err;
       done();
     });
   });
@@ -96,16 +101,23 @@ describe('.fetchWeight(limit, function(err, weights))', function() {
 
 describe('.fetchHeartrate(limit, function(err, heartrates))', function() {
   it('Get all Measurements', function(done) {
-    runtasticSession.fetchHeartrate(null, function(err, heartrates) {
+    runtasticSession.fetchHeartrate(null, null, function(err, heartrates) {
       if (err) throw err;
       done();
     });
   });
 
   it('Get the latest 5 Measurements', function(done) {
-    runtasticSession.fetchHeartrate(5, function(err, heartrates) {
+    runtasticSession.fetchHeartrate(5, null, function(err, heartrates) {
       if (err) throw err;
       heartrates.should.be.an.instanceOf(Array).and.have.lengthOf(5);
+      done();
+    });
+  });
+
+  it('Get Measurements in the Timeframe from 2016/01/01 to current Date', function(done) {
+    runtasticSession.fetchHeartrate(null, {'from': new Date('2016/01/01'), 'to': new Date()}, function(err, heartrates) {
+      if (err) throw err;
       done();
     });
   });
@@ -114,7 +126,7 @@ describe('.fetchHeartrate(limit, function(err, heartrates))', function() {
 describe('.fetchAll(limit, function(err, results))', function() {
   this.timeout(5000);
   it('Get Results from all API-Endpoints', function(done) {
-    runtasticSession.fetchAll(null, function(err, results) {
+    runtasticSession.fetchAll(null, null, function(err, results) {
       if (err) throw err;
       done();
     });
@@ -122,11 +134,18 @@ describe('.fetchAll(limit, function(err, results))', function() {
 
   it('Get the latest 5 Results from all API-Endpoints', function(done) {
     this.timeout(5000);
-    runtasticSession.fetchAll(5, function(err, results) {
+    runtasticSession.fetchAll(5, null, function(err, results) {
       if (err) throw err;
       results['activities'].should.be.an.instanceOf(Array).and.have.lengthOf(5);
       results['weight'].should.be.an.instanceOf(Array).and.have.lengthOf(5);
       results['heartrates'].should.be.an.instanceOf(Array).and.have.lengthOf(5);
+      done();
+    });
+  });
+
+  it('Get Results in the Timeframe from 2016/01/01 to current Date', function(done) {
+    runtasticSession.fetchAll(null, {'from': new Date('2016/01/01'), 'to': new Date()}, function(err, results) {
+      if (err) throw err;
       done();
     });
   });
